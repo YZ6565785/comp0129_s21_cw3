@@ -131,13 +131,6 @@ CW3::Lab1PublishFrames ()
                                                ros::Time::now(), 
                                                world_frame_,
                                                robot_frame_));
-	
-  // publish world->world frame (fixes a bug with the moveit! tutorials:
-  // https://github.com/ros-planning/moveit_tutorials/issues/192 )
-  tranf_br_.sendTransform(tf::StampedTransform(transf_,
-                                               ros::Time::now(), 
-                                               world_frame_,
-                                               "world"));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
