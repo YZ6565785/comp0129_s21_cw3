@@ -113,7 +113,7 @@ void
 CW3::Lab1CreateFrames ()
 {
   // generate a robot frame attached to the world frame (0,0,0)
-  transf_.setOrigin (tf::Vector3(0.0, 0.0, 3.0));
+  transf_.setOrigin (tf::Vector3(0.0, 0.0, 0.0));
   transf_.setRotation (tf::Quaternion(0.0, 0.0, 0.0, 1.0)); //quaternion
   
   // Note that the rotation can be given in various forms (rotation matrix,
@@ -131,6 +131,13 @@ CW3::Lab1PublishFrames ()
                                                ros::Time::now(), 
                                                world_frame_,
                                                robot_frame_));
+	
+  // publish world->world frame (fixes a bug with the moveit! tutorials:
+  // https://github.com/ros-planning/moveit_tutorials/issues/192 )
+  tranf_br_.sendTransform(tf::StampedTransform(transf_,
+                                               ros::Time::now(), 
+                                               world_frame_,
+                                               "world"));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -184,7 +191,7 @@ CW3::cw1Q3AddColObj (moveit::planning_interface::PlanningSceneInterface&
   // Add the second table where we will be placing the cube.
   collision_objects[1] = CW3::cw1Q3MakeBox("table2", "panda_link0",
                                             0.2, 0.4, 0.4,
-											-0.5, 0.0, 0.2);
+					    -0.5, 0.0, 0.2);
   
   // Add the second table where we will be placing the cube.
   collision_objects[2] = CW3::cw1Q3MakeBox("table3", "panda_link0",
